@@ -15,8 +15,8 @@ const TOKEN_REJECT = 'ss/auth/TOKEN_REJECT';
 // Init state
 const initState = {
     profile: {
-        token: null,
-    }
+        token: null
+    },
 }
 
 // Reducer

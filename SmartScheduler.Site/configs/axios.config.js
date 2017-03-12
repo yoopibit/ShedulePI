@@ -22,7 +22,10 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(
     response => response, 
     error => {
-        const status = error.response.status;
+        let status;
+        if (error.response) {
+            status = error.response.status
+        }
         handleStatus(status);
         return Promise.reject(error);
     }
