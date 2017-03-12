@@ -8,9 +8,15 @@ const SIGNIN_FULFILLED = 'ss/auth/SIGNIN_FULFILLED';
 const SIGNIN_FAILURE = 'ss/auth/SIGNIN_FAILURE';
 const SIGNOUT = 'ss/auth/SIGNOUT';
 
+const TOKEN_GET = 'ss/auth/TOKEN_GET';
+const TOKEN_RECEIVE = 'ss/auth/TOKEN_RECEIVE';
+const TOKEN_REJECT = 'ss/auth/TOKEN_REJECT';
+
 // Init state
 const initState = {
-    profile: null,
+    profile: {
+        token: null,
+    }
 }
 
 // Reducer
@@ -23,6 +29,17 @@ const reducer = (state = initState, action) => {
             return {
                 ...state,
                 profile: action.profile
+            };
+        case TOKEN_GET:
+        case TOKEN_RECEIVE:
+            return state;
+        case TOKEN_REJECT:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    token: null
+                }
             };
         default:
             return state;
@@ -42,6 +59,19 @@ const signInFulfilled = profile => ({
 const signInFailure = () => ({
     type: SIGNIN_FAILURE,
     profile: null
+});
+
+const getToken = () => ({
+    type: TOKEN_GET
+});
+
+const receiveToken = () => ({
+    type: TOKEN_RECEIVE
+});
+
+const rejectToken = () => ({
+    type: TOKEN_REJECT,
+    token: null
 });
 
 // Async actions
@@ -74,17 +104,35 @@ const signOut = () => dispatch => {
     return axios.post(API.auth.signOut);
 }
 
+const fetchToken = callback => dispatch => {
+    getToken();
+
+    return axios.get(API.auth.auth)
+        .then(response => {
+            receiveToken();
+            callback();
+        })
+        .catch(error => {
+            rejectToken();
+        });
+}
+
 // Exports
 export const actionTypes = {
     SIGNIN_REQUEST,
     SIGNIN_FULFILLED,
     SIGNIN_FAILURE,
-    SIGNOUT
+    SIGNOUT,
+
+    TOKEN_GET,
+    TOKEN_RECEIVE,
+    TOKEN_REJECT
 }
 
 export const actionCreators = {
     signIn,
-    signOut
+    signOut,
+    fetchToken
 }
 
 export default reducer;

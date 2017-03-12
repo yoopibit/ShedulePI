@@ -1,10 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Router, hashHistory, Route, IndexRoute } from 'react-router';
+import { Router, hashHistory, Route, IndexRoute, onEnter } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import store from '../store';
 
 import App from './app';
+import { checkAuth } from '../modules/auth/token-validation';
 import { default as AuthLayout } from '../modules/auth/components/auth-layout';
 import { default as NotFound } from '../modules/not-found/components/not-found-layout';
 
@@ -15,7 +16,7 @@ const Root = () => (
     <Provider store={ store }>
         <Router history={ history }>
             <Route path="/" component={ App }>
-                <IndexRoute component={ AuthLayout } />
+                <IndexRoute component={ AuthLayout } onEnter={ checkAuth(store) } />
                 <Route path="*" component={ NotFound } />
             </Route>
             
