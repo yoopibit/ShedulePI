@@ -13,6 +13,7 @@ namespace SmartScheduler.Models.DataContexts.Context
         IEnumerable<Group> AllGroups { get; }
         Group GetGrop(int id);
         int AddGroup(string name);
+        bool EditGroup(int id, string newName);
         bool DeleteGroup(int id);
         bool AddStudentInGroup(int studentId, int groupId);
         bool DeleteStrudentFromGroup(int studentId, int groupId);
@@ -136,6 +137,24 @@ namespace SmartScheduler.Models.DataContexts.Context
         public IEnumerable<Group> GetStudentGroups(int studentId)
         {
             return Context.StudentsInGroups.Where(x => x.StudentId == studentId).Select(x=>x.Group.Convert());
+        }
+
+        public bool EditGroup(int id, string newName)
+        {
+            var item = Context.Groups.FirstOrDefault(x => x.GroupId == id);
+            if (item == null) return false;
+
+            item.Name = newName;
+            try
+            {
+                Context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception:{ex.Message}");
+                return false;
+            }
+            return true;
         }
     }
 
