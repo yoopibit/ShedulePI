@@ -32,13 +32,15 @@ namespace SmartScheduler.Models.DataContexts.Context
         {
             get
             {
-                return Context.Administators.Select(x => x.Convert(null));
+                return Context.Administators.ToList().Select(x => x.Convert(null));
             }
         }
 
         public int AddAdministrator(string login, string password, string fname, string lname, string mname, int entryYear)
         {
             if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password)) return -1;
+
+            if (Context.Users.Any(x => x.Login == login)) return -1;
 
             var newUser = new DbUser();
             newUser.RegDate = DateTime.Now;

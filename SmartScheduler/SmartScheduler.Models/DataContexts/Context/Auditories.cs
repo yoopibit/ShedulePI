@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartScheduler.Models.DataContexts.Context
 {
@@ -12,6 +10,7 @@ namespace SmartScheduler.Models.DataContexts.Context
     {
         IEnumerable<Auditory> AllAuditories { get; }
         int AddAuditory(int number);
+        bool UpdateAuditory(int id, int newNumber);
         bool DeleteAuditory(int id);
     }
     public class Auditories : IAuditoriesDbContext
@@ -27,7 +26,7 @@ namespace SmartScheduler.Models.DataContexts.Context
         {
             get
             {
-                return Context.Auditories.Select(x=>x.Convert());
+                return Context.Auditories.ToList().Select(x=>x.Convert());
             }
         }
 
@@ -60,6 +59,24 @@ namespace SmartScheduler.Models.DataContexts.Context
             if (item == null) return false;
 
             Context.Auditories.Remove(item);
+            try
+            {
+                Context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception:{ex.Message}");
+                return false;
+            }
+            return true;
+        }
+
+        public bool UpdateAuditory(int id, int newNumber)
+        {
+            var item = Context.Auditories.FirstOrDefault(x => x.AuditoryId == id);
+            if (item == null) return false;
+
+            item.Number = newNumber;
             try
             {
                 Context.SaveChanges();
