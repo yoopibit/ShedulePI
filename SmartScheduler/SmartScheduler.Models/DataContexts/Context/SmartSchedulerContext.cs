@@ -53,6 +53,7 @@ namespace SmartScheduler.Models.DataContexts.Context
             TeacherRanks = new TeacherRanks(m_Context);
             Teachers = new Teachers(m_Context);
             Users = new Users(m_Context);
+            Groups = new Groups(m_Context);
         }
 
         public IAdministratorsDbContext Administrators { get; set; }
