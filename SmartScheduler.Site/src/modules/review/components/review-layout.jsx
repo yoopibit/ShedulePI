@@ -16,14 +16,8 @@ const ReviewLayoutComponent = (props) => ({
         return this.props.isLoading 
             ? <Spinner /> 
             : (<div className="l-auth">
-                   <div className="b-preview">
-                        <h1 className="b-preview__title">
-                            Smart scheduler
-                        </h1>
-                        <h4 className="b-preview__description">...is a smart way to orginize your day</h4>
-                    </div>
-                     {this._renderTable()}
-                </div>);
+                {this._renderTable()}
+              </div>);
     },
 
     _renderTable: function() {
