@@ -39,7 +39,8 @@ const ReviewLayoutComponent = (props) => ({
     },
 
     _renderScheduleData: function(dayData) {
-        return dayData.data.map(function(item) {
+        var sortedData = this._getSortedDataByPair(dayData.data);
+        return sortedData.map(function(item) {
             return (
                 <div className="table-block">
                     <div className="pair-col">{item.pair}</div>
