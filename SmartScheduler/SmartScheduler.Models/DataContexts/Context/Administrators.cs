@@ -16,6 +16,7 @@ namespace SmartScheduler.Models.DataContexts.Context
         bool EditAdministrator(int id, string newLogin, string newPassword, string fname, string lname);
         Administrator GetAdministrator(int id, bool withUser = false);
         Administrator GetAdministrator(string login, string password);
+        Administrator GetAdministrator(int userId);
         IEnumerable<Administrator> AllAdministrators { get; }
     }
 
@@ -145,6 +146,15 @@ namespace SmartScheduler.Models.DataContexts.Context
         public Administrator GetAdministrator(string login, string password)
         {
             var administrator = Context.Administators.FirstOrDefault(x => x.User.Login == login && x.User.Password == password);
+
+            if (administrator == null) return null;
+
+            return administrator.Convert(administrator.User);
+        }
+
+        public Administrator GetAdministrator(int userId)
+        {
+            var administrator = Context.Administators.FirstOrDefault(x => x.UserId == userId);
 
             if (administrator == null) return null;
 

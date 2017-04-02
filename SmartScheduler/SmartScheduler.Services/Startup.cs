@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(SmartScheduler.Services.Startup))]
+
 
 namespace SmartScheduler.Services
 {
@@ -12,7 +12,8 @@ namespace SmartScheduler.Services
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
+
+            //ConfigureAuth(app);
         }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SmartScheduler.Models.DataContexts.Context
 {
@@ -54,6 +51,8 @@ namespace SmartScheduler.Models.DataContexts.Context
             Teachers = new Teachers(m_Context);
             Users = new Users(m_Context);
             Groups = new Groups(m_Context);
+
+            Administrators.AddAdministrator("Admin", "admin", "", "", "", 1980);
         }
 
         public IAdministratorsDbContext Administrators { get; set; }
