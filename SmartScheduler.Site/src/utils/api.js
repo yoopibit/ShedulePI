@@ -7,6 +7,9 @@ const API = {
     },
     review: {
         getSchedule: `https://schedule-75bea.firebaseio.com/table.json`
+    },
+    guestReview: {
+        schedule: `https://reactapi-aca87.firebaseio.com/schedule.json`
     }
 }
 

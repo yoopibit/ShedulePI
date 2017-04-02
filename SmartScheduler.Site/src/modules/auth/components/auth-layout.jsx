@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import { default as Button } from '../../../components/button';
 import LogoIcon from '../../../assets/logo.png';
@@ -16,6 +18,8 @@ class AuthLayoutComponent extends Component {
 
     render() {
         const { isAuthModalOpen } = this.state;
+        const { toReview } = this.props;
+        
         return (
             <div className="l-auth">
                 <div className="b-preview">
@@ -42,11 +46,17 @@ class AuthLayoutComponent extends Component {
                         type="button"
                         className="btn btn--default"
                         title="Continue as guest"
-                        onClick={ this.handleA } />
+                        onClick={ toReview } />
                 </div>
             </div>
         );
     }
 }
 
-export default AuthLayoutComponent;
+const mapDispatchToProps = dispatch => ({
+    toReview() {
+        dispatch(push('/review'));
+    }
+});
+
+export default connect(null, mapDispatchToProps)(AuthLayoutComponent);

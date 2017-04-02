@@ -1,0 +1,88 @@
+.schedule-container 
+    margin: 20px
+    display: flex
+    flex-flow: column
+    flex-grow: 1
+    max-width: 900px 
+    width: 100%
+
+.schedule
+    display: flex
+    flex-flow: column wrap
+    flex-grow: 1
+    color: $color-light
+
+    +element('menu')
+        margin: 0 20px;
+        display: flex
+        padding: 20px
+        color: $color-light
+        background: $bg-color-primary-light
+
+    +element('menu-item')
+        margin-right: 10px
+
+
+    +element('menu-title')
+        margin-right: 10px
+
+    +element('day')
+        padding: 20px
+        display: flex
+
+    +element('day-title')
+        border-right: 1px solid $color-light 
+        padding-right: 10px
+        width: 80px
+        padding: 10px
+
+        +modifier('orange')
+            background: lighten($color-orange, 3%)
+
+        +modifier('green')
+            background: lighten($color-green, 3%)
+
+    +element('pair-container')
+        display: flex
+        flex-flow: column
+        flex: 1
+
+    +element('pair-wrapper')
+        padding: 10px
+        display: flex
+        flex: 1
+        justify-content: space-between
+        align-items: center
+
+    +element('pair')
+        display: flex
+        border-bottom: 1px solid $bg-color-primary 
+        background: $bg-color-primary-light
+
+        +modifier('pair')
+
+    +element('pair-number')
+        display: flex
+        align-items: center
+        padding: 20px 
+        background: lighten($bg-color-primary-light, 3%)
+    
+    +element('pair-place')
+        margin-left: 10px
+
+    +element('teacher-description')
+        display: flex
+        flex-flow: column
+        align-items: center
+
+    +element('teacher-avatar')
+        width: 50px 
+        height: 50px 
+        border-radius: 50%
+        overflow: hidden
+        position: relative 
+        margin-bottom: 5px
+
+    +element('teacher-image')
+        position: absolute
+        max-width: 100%
