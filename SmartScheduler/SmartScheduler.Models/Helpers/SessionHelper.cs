@@ -1,4 +1,5 @@
-﻿using SmartScheduler.Models.Models;
+﻿using SmartScheduler.Models.DataContexts.Context;
+using SmartScheduler.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -25,6 +26,23 @@ namespace SmartScheduler.Models.Helpers
         private static string CreateToken(int userId)
         {
             return CalculateMD5Hash($"{userId}:{DateTime.UtcNow}");
+        }
+
+        public static bool isRoleValid(Role role, string token)
+        {
+
+            var userId = GetSession(token);
+
+            if (role.Equals(Role.Admin))
+            {
+                Administrator admin = SmartSchedulerContext.Instance.Administrators.GetAdministrator(userId);
+                if (admin == null) return false;
+            } 
+            else
+            {
+                return SmartSchedulerContext.Instance.Users.UserExist(userId);
+            }
+            return true;
         }
 
         public static int GetSession(string token)

@@ -1,4 +1,5 @@
-﻿using SmartScheduler.Models.Models;
+﻿using Microsoft.AspNet.Identity;
+using SmartScheduler.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SmartScheduler.Models.DataContexts.Context
 {
-    public interface IUsersDbContext
+    public interface IUsersDbContext 
     {
         int AddUser(string login, string password);
         bool DeleteUser(int id);
@@ -16,6 +17,7 @@ namespace SmartScheduler.Models.DataContexts.Context
         User GetUser(string login,string password);
         void UpdateLastActivity(int id);
         bool UserExist(string login);
+        bool UserExist(int id);
     }
 
     public class Users : IUsersDbContext
@@ -114,6 +116,11 @@ namespace SmartScheduler.Models.DataContexts.Context
             {
                 Debug.WriteLine($"Exception:{ex.Message}");
             }
+        }
+
+        public bool UserExist(int id)
+        {
+            return Context.Users.Any(x => x.UserId== id);
         }
     }
 

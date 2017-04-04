@@ -14,7 +14,6 @@ namespace SmartScheduler.Services.Controllers
     public class SubjectsController : ApiController
     {
         //Получить все предметы
-        [Route("")]
         [HttpGet]
         public List<Subject> GetAllSubjects()
         {
@@ -22,19 +21,17 @@ namespace SmartScheduler.Services.Controllers
         }
 
         //Получить список предметов с конкретным названием
-        [Route("{subjectname: alpha}")]
         [HttpGet]
         public List<Subject> GetSubjectsById(string subjectName)
         {
             var temp = SmartScheduler.Models.DataContexts.Context.SmartSchedulerContext.Instance.Subjects.AllSubjects;
-            var subject =  (from subj in temp
+            var subject = (from subj in temp
                            where subj.Name == subjectName
                            select subj).ToList();
             return subject;
         }
 
         //Получить список предметом с конкретным числом кредитов
-        [Route("{credits: int}")]
         [HttpGet]
         public List<Subject> GetSubjectsWithCredits(int credits)
         {
@@ -69,7 +66,7 @@ namespace SmartScheduler.Services.Controllers
                     }
                 }
             }
-            return null;    
+            return null;
         }
 
         //Добавить предмет в БД
@@ -77,11 +74,11 @@ namespace SmartScheduler.Services.Controllers
         //BadRequest(400) - в случаи, если предмет уже есть(да, 400-е сообщение тут не очень подходит логически, но блин...
         [Route("")]
         [HttpPost]
-        public IHttpActionResult AddSubject([FromBody]string input)
+        public IHttpActionResult AddSubject([FromBody]string name)
         {
-            if (input != null)
+            if (name != null)
             {
-                var arguments = input.Split(' ');
+                var arguments = name.Split(' ');
                 if (arguments.Count() <= 2)
                 {
                     var index = SmartScheduler.Models.DataContexts.Context.SmartSchedulerContext.Instance.Subjects.AddSubjects(arguments[0]);
@@ -94,7 +91,7 @@ namespace SmartScheduler.Services.Controllers
             return BadRequest();
         }
 
-        
+
         //Удалить предмет
         //Ok(200) - если предмет нормально удалился
         //BadRequst(400) - если неверный формат тела запроса
@@ -103,14 +100,14 @@ namespace SmartScheduler.Services.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteSubject([FromBody]string input)
         {
-            if(input != null)
+            if (input != null)
             {
                 try
                 {
                     var arguments = input.Split(' ');
                     string name = arguments[0];
                     int credits;
-                    if(!Int32.TryParse(arguments[1], out credits))
+                    if (!Int32.TryParse(arguments[1], out credits))
                     {
                         throw new Exception();
                     }

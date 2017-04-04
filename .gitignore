@@ -215,3 +215,4 @@ ModelManifest.xml
 # Visual Studio Code
 
 .vscode
+/SmartScheduler.Site/.idea

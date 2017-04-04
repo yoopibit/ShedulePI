@@ -13,6 +13,7 @@ namespace SmartScheduler.Models.Tests
         {
             var login = "test_login";
             var passord = "test_password";
+            var a = Instance.Users.GetUser("Admin", "admin");
             var id = Instance.Users.AddUser(login, passord);
             Assert.AreNotEqual(id, -1);
             var user = Instance.Users.GetUser(login, passord);
